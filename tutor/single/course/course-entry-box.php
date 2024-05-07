@@ -299,26 +299,13 @@ $login_url    = tutor_utils()->get_option( 'enable_tutor_native_login', null, tr
 							<?php
 									// Получаем ID пользователя
 									$user_id = get_current_user_id();
-									
+
 									// Получаем все заказы пользователя
 									$orders = wc_get_orders( array(
 										'customer_id' => $user_id,
 										'status'      => array( 'completed' ) // Проверяем только завершенные заказы
 									) );
-									$related_product =  get_field( '_related_woo_product_id', get_the_ID());
-									$product = wc_get_product($related_product);
-									if ($product) {
-										// Получите цену продукта
-										$price = wc_price($product->get_price());
-										$add_to_cart_url = $product->add_to_cart_url();
-								
-									}
-									$enroll_btn = '<div class=""><a href="' . esc_url( $product->add_to_cart_url() ). '" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block">В козину  ' . $price . '</a><a class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button tutor-static-loader" href="' . home_url()  . '/тарифы">Подписка</a></div>';
 
-
-								if($orders > 0){
-
-									
 									// Проходим по каждому заказу пользователя
 									foreach ( $orders as $order ) {
 										// Получаем товары из заказа
@@ -333,35 +320,26 @@ $login_url    = tutor_utils()->get_option( 'enable_tutor_native_login', null, tr
 											$related_course_id = get_field( '_related_course_id', $product_id );
 
 											// Проверяем, совпадает ли ID курса с ID, который нужно проверить
-											if ( $related_course_id == get_the_ID() ) { 
-												$enroll_btn = '<button type="submit" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button tutor-static-loader">Записаться сейчас</button>';																			
+											if ( $related_course_id == get_the_ID() ) { ?>
+												<button type="submit" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button tutor-static-loader">
+													<?php esc_html_e( 'Enroll now', 'tutor' ); ?>
+												</button>
 												
-											} 
-
+										<?php	}
 										}
 									}
 									$user_subscriptions = wcs_get_users_subscriptions( $user_id );
 									foreach ( $user_subscriptions as $subscription ) {
-										$order_id= $subscription->get_parent_id();
-										$order = wc_get_order( $order_id );
-										$product_id = '';
-										if ( $order ) {
-											// Получаем массив объектов товаров из заказа
-											$items = $order->get_items();
+										$category_id = get_field( 'category_id', $subscription);	
+										if (has_term($category_id , 'course-category', get_the_ID())){ ?>
+											<button type="submit" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button tutor-static-loader">
+												<?php esc_html_e( 'Enroll now', 'tutor' ); ?>
+											</button>
+											
+									<?php	
 									
-											foreach ( $items as $item ) {
-												$product_id = $item->get_product_id();
-												// Используйте $product_id по вашему усмотрению
-											}
-										}
-									
-										$category_id = get_field( 'category_id', $product_id);	
-										if (has_term($category_id , 'course-category', get_the_ID())){ 
-											$enroll_btn = '<button type="submit" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button tutor-static-loader">Записаться сейчас</button>';																			
 									}
 									}
-								} 								
-								echo $enroll_btn;
 							?>
 
 

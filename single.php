@@ -10,73 +10,46 @@
 defined( 'ABSPATH' ) || exit;
 
 get_header();
-$post_id = get_the_ID()
+
 ?>
 
-<main class="main-wrapper">
-         <section class="blog-single" id="blog-single">
-            <div class="section-heading">
-               <div class="container">
-                  <nav aria-label="Page breadcrumb">
-                     <ul class="breadcrumb">
-								<li><a href="<?php echo home_url(); ?>" class="breadcrumb-item" aria-current="page">Главаня</a></li>
-                        <li><a href="<?php echo home_url();?>/блог" class="breadcrumb-item">Блог</a></li>
-								<li><a href="<?php echo get_permalink() ?>" class="breadcrumb-item current-page"><?php echo get_the_title(); ?></a></li>
-                     </ul>
-                  </nav>
-                  <div class="section-info">
-                     <h1 class="section-title"><?php echo get_the_title(); ?></h1>
-                     <!--<div class="section-description">
-                        <p>
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit orem ipsum dolor sit amet,
-                           consectetur adipiscing
-                        </p>
-                     </div>-->
-                  </div>
-                  <div class="blog-single__meta">
-                     <div class="category-list">
-							<?php
-							$categories = get_the_category($post_id);; // Получаем список всех категорий
+<div class="container">
+	<div class="row">
+		<?php if ( 'sidebar_left' === $sidebar ) : ?>
+			<div id="sidebar" class="col-sm-3">
+				<?php get_sidebar(); ?>
+			</div><!-- .col- -->
+		<?php endif; ?>
+		<div class="<?php echo 'sidebar_none' === $sidebar || false === $sidebar ? 'col-lg-10 col-sm-10 m-auto' : 'col-sm-9'; ?>">
+			<div id="primary" class="content-area">
+				<main id="main" class="site-main" role="main">
+					<?php
+					/* Start the Loop */
+					while ( have_posts() ) :
+						the_post();
 
-							if ( $categories ) {
-								foreach ( $categories as $category ) {
-									$category_link = get_category_link( $category->term_id ); // Получаем URL категории
-									?>
-									<div class="category-list__item">
-										<a class="category-list__link" href="<?php echo esc_url( $category_link ); ?>"><?php echo esc_html( $category->name ); ?></a>
-									</div>	
-									<?php									
-								}
-							}
-							?>                      
-                     </div>
-                     <div class="post-meta">
-                        <div class="post-meta__item">
-                           <img src="<?php echo get_template_directory_uri(  ); ?>/img/icons/mdi_heart.svg" alt="Likes">
-                           <span>22</span>
-                        </div>
-                        <div class="post-meta__item">
-                           <img src="<?php echo get_template_directory_uri(  ); ?>/img/icons/fa6-solid_message.svg" alt="Likes">
-                           <span>8</span>
-                        </div>
-                     </div>
-                     <div class="blog-single__date post-date"><?php echo get_the_date();?></div>
-                  </div>
-               </div>
-            </div>
-            <div class="post-content">
-               <div class="container">
-						<div class="post-image">
-							<img src="<?php echo get_the_post_thumbnail_url(null, 'large');?>" alt="img">
-						</div>
-                  <div class="post-content__wrapper">
-                     <p>
-                        <?php the_content() ?>
-                     </p>
-                  </div>
-               </div>
-            </div>
-         </section>
-      </main>
+						get_template_part( 'views/content', get_post_format() );
+
+						// the_post_navigation();
+
+						// If comments are open or we have at least one comment, load up the comment template.
+						if ( comments_open() || get_comments_number() ) :
+							comments_template();
+						endif;
+
+					endwhile;
+
+					?>
+
+				</main><!-- #main -->
+			</div><!-- #primary -->
+		</div><!-- .col- -->
+		<?php if ( 'sidebar_right' === $sidebar ) : ?>
+			<div id="sidebar" class="col-sm-3">
+				<?php get_sidebar(); ?>
+			</div><!-- .col- -->
+		<?php endif; ?>
+	</div><!-- .row -->
+</div><!-- .container -->
 <?php
 get_footer();

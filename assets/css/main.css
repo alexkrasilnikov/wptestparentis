@@ -9,17 +9,6 @@ h2,
 h3 {
 	font-family: Gilroy !important;
 }
-.tutor-btn.tutor-btn-primary.tutor-btn-lg.tutor-btn-block {
-	display: flex;
-	justify-content: space-between;
-	background: rgb(163, 204, 210);
-	border: unset;
-}
-.tutor-btn.tutor-btn-primary.tutor-btn-lg.tutor-btn-block.tutor-mt-24.tutor-enroll-course-button.tutor-static-loader {
-	background: #fff;
-	color: #000;
-	border: 1px solid #000;
-}
 .tutor-rcp-membership-levels.tutor-mb-12 {
 	max-height: 0 !important;
 	opacity: 0 !important;

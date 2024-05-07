@@ -344,99 +344,6 @@ function get_home() {
 add_shortcode('get_pricing1','get_pricing');
 function get_pricing() {
 	?>
-	<?php
-$arr = array();
-$i = 0;
-if( have_rows('price1_rep') ):
-    while ( have_rows('price1_rep') ) : the_row();
-        $s = get_sub_field('text1');
-		$arr[$i] = $s;
-		$i = $i + 1;
-    endwhile;
-endif;
-$arrbool = array();
-$i2 = 0;
-if( have_rows('price1_rep') ):
-    while ( have_rows('price1_rep') ) : the_row();
-        $s = get_sub_field('boolean1');
-		$arrbool[$i2] = $s;
-		$i2 = $i2 + 1;
-    endwhile;
-endif;
-$arr_text_field = array();
-$i = 0;
-if( have_rows('price1_rep') ):
-    while ( have_rows('price1_rep') ) : the_row();
-        $s = get_sub_field('text_field');
-		$arr_text_field[$i] = $s;
-		$i = $i + 1;
-    endwhile;
-endif;
-
-
-$arr_standart_text = array();
-$i2 = 0;
-if( have_rows('Standart') ):
-    while ( have_rows('Standart') ) : the_row();
-        $s = get_sub_field('text1');
-		$arr_standart_text[$i2] = $s;
-		$i2 = $i2 + 1;
-    endwhile;
-endif;
-$arr_standart_bool = array();
-$i2 = 0;
-if( have_rows('Standart') ):
-    while ( have_rows('Standart') ) : the_row();
-        $s = get_sub_field('boolean1');
-		$arr_standart_bool[$i2] = $s;
-		$i2 = $i2 + 1;
-    endwhile;
-endif;
-$arr_standart_field = array();
-$i2 = 0;
-if( have_rows('Standart') ):
-    while ( have_rows('Standart') ) : the_row();
-        $s = get_sub_field('text_field');
-		$arr_standart_field[$i2] = $s;
-		$i2 = $i2 + 1;
-    endwhile;
-endif;
-
-
-
-
-
-$arr_premium_text = array();
-$i3 = 0;
-if( have_rows('Premium') ):
-    while ( have_rows('Premium') ) : the_row();
-        $s = get_sub_field('text1');
-		$arr_premium_text[$i3] = $s;
-		$i3 = $i3 + 1;
-    endwhile;
-endif;
-$arr_premium_bool = array();
-$i2 = 0;
-if( have_rows('Premium') ):
-    while ( have_rows('Premium') ) : the_row();
-        $s = get_sub_field('boolean1');
-		$arr_premium_bool[$i2] = $s;
-		$i2 = $i2 + 1;
-    endwhile;
-endif;
-$arr_premium_field = array();
-$i2 = 0;
-if( have_rows('Premium') ):
-    while ( have_rows('Premium') ) : the_row();
-        $s = get_sub_field('text_field');
-		$arr_premium_field[$i2] = $s;
-		$i2 = $i2 + 1;
-    endwhile;
-endif;
-var_dump($arr_premium_text);
-var_dump($arr_premium_bool );
-var_dump($arr_premium_field);
-?>
 	<style>
 	.container {
 		margin: 0px !important;
@@ -459,7 +366,7 @@ var_dump($arr_premium_field);
                         <span class="breadcrumb-item current-page">Тарифы</span>
                      </ul>
                   </nav>
-                  <h1 class="pricing-title section-title"><?php echo get_sub_field("text1"); //get_field("Text1", 1125); ?></h1> 
+                  <h1 class="pricing-title section-title"><?php echo get_field("h1", 1125); ?></h1>
                </div>
             </div>
             <div class="pricing-body">
@@ -561,26 +468,84 @@ var_dump($arr_premium_field);
                      <div class="subscription-item__benefits">
                         <div class="subscription-benefits__title">Что получаете</div>
                         <div class="subscription-benefits__list">
-                         
-						   <?php 
-						   for ($i4 = 0; $i4<$i; $i4++) {
-							   echo ' 
-							<div class="subscription-benefits__item">
-                              <div class="subscription-benefits__label">'.$arr_text_field[$i4].'</div>
-							  ';
-							if ($arr[$i4]=='') {
-								if ($arrbool[$i4]==false) {  
-									echo '<img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">';
-								} else {
-									echo '<img src="/wp-content/themes/tutorstarter/img/icons/icon-park-solid_check-one.svg" alt="">';
-								}
-							} else {
-								echo '<div class="subscription-benefits__content">'.$arr[$i4].'</div>';
-							}
-							echo '</div>';
-						   }
-						   ?>
-                           
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Вебинары интерактивные на любую тему</div>
+                              <div class="subscription-benefits__content">1</div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Частные консультации</div>
+                              <div class="subscription-benefits__content">Возможность покупки за 120 евро</div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Статьи</div>
+                              <div class="subscription-benefits__content">8</div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Статьи</div>
+                              <div class="subscription-benefits__content">8</div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Сопровождение личного менеджера </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Инструменты (мультики, аудио книги и тд)
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Групповые сессии
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Доступ ко всем курсам
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/icon-park-solid_check-one.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Подкасты (запись)
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 5
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Телеграм Канал
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/icon-park-solid_check-one.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Коммуникация с экспертом (в тексте)
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Записи вебинаров и групповых сессий
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 1
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Посещение вебинаров пригл. спикеров
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 за деньги (1 в мес)
+                              </div>
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -605,25 +570,84 @@ var_dump($arr_premium_field);
                      <div class="subscription-item__benefits">
                         <div class="subscription-benefits__title">Что получаете</div>
                         <div class="subscription-benefits__list">
-						<?php 
-						   for ($i4 = 0; $i4<$i; $i4++) {
-							   echo ' 
-							<div class="subscription-benefits__item">
-                              <div class="subscription-benefits__label">'.$arr_standart_field[$i4].'</div>
-							  ';
-							if ($arr_standart_text[$i4]=='') {
-								if ($arr_standart_bool[$i4]==false) {  
-									echo '<img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">';
-								} else {
-									echo '<img src="/wp-content/themes/tutorstarter/img/icons/icon-park-solid_check-one.svg" alt="">';
-								}
-							} else {
-								echo '<div class="subscription-benefits__content">'.$arr_standart_text[$i4].'</div>';
-							}
-							echo '</div>';
-						   }
-						   ?>
-                           
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Вебинары интерактивные на любую тему</div>
+                              <div class="subscription-benefits__content">1</div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Частные консультации</div>
+                              <div class="subscription-benefits__content">Возможность покупки за 120 евро</div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Статьи</div>
+                              <div class="subscription-benefits__content">8</div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Статьи</div>
+                              <div class="subscription-benefits__content">8</div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Сопровождение личного менеджера </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Инструменты (мультики, аудио книги и тд)
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Групповые сессии
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Доступ ко всем курсам
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/icon-park-solid_check-one.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Подкасты (запись)
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 5
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Телеграм Канал
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/icon-park-solid_check-one.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Коммуникация с экспертом (в тексте)
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 <img src="/wp-content/themes/tutorstarter/img/icons/ph_close.svg" alt="">
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Записи вебинаров и групповых сессий
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 1
+                              </div>
+                           </div>
+                           <div class="subscription-benefits__item">
+                              <div class="subscription-benefits__label">Посещение вебинаров пригл. спикеров
+                              </div>
+                              <div class="subscription-benefits__content">
+                                 за деньги (1 в мес)
+                              </div>
+                           </div>
                         </div>
                      </div>
                   </div>

@@ -29,16 +29,9 @@ if ( ! is_user_logged_in() ) {
 }
 
 
-$related_product =  get_field( '_related_woo_product_id', get_the_ID());
-$product = wc_get_product($related_product);
-$enroll_btn = '';
-if ($product) {
-	// Получите цену продукта
-	$price = wc_price($product->get_price());
 
-	// Выведите кнопку покупки курса с ценой
-	$enroll_btn = '<div class=""><a href="' . esc_url( $product->add_to_cart_url() ). '" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block">В козину  ' . $price . '</a><a class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button tutor-static-loader" href="' . home_url()  . '/тарифы">Подписка</a></div>';
-}
+
+
 // Получаем ID пользователя
 $user_id = get_current_user_id();
 
@@ -65,37 +58,18 @@ foreach ( $orders as $order ) {
 		if ( $related_course_id == get_the_ID() ) {
 			$enroll_btn = '<div class="tutor-course-list-btn">' . apply_filters( 'tutor_course_restrict_new_entry', '<a href="' . get_the_permalink() . '" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block ' . $button_class . ' " data-course-id="' . $course_id . '">' . __( 'Enroll Course', 'tutor' ) . '</a>' ) . '</div>';
 		} else{
-			$enroll_btn = '<div class=""><a href="' . esc_url( $product->add_to_cart_url() ). '" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block">В козину  ' . $price . '</a><a class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button tutor-static-loader" href="' . home_url()  . '/тарифы">Подписка</a></div>';
-
+			$enroll_btn = '';
 		}
-
+		$user_subscriptions = wcs_get_users_subscriptions( $user_id );
+		foreach ( $user_subscriptions as $subscription ) {
+			$category_id = get_field( 'category_id', $subscription);	
+			if (has_term($category_id , 'course-category', get_the_ID())){
+				$enroll_btn = '<div class="tutor-course-list-btn">' . apply_filters( 'tutor_course_restrict_new_entry', '<a href="' . get_the_permalink() . '" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block ' . $button_class . ' " data-course-id="' . $course_id . '">' . __( 'Enroll Course', 'tutor' ) . '</a>' ) . '</div>';
+			}
+		}
 	}
 }
 
-$user_subscriptions = wcs_get_users_subscriptions( $user_id );
-foreach ( $user_subscriptions as $subscription ) {
-
-	$order_id= $subscription->get_parent_id();
-	$order = wc_get_order( $order_id );
-	$product_id = '';
-	if ( $order ) {
-		// Получаем массив объектов товаров из заказа
-		$items = $order->get_items();
-
-		foreach ( $items as $item ) {
-			$product_id = $item->get_product_id();
-			// Используйте $product_id по вашему усмотрению
-		}
-	}
-
-	$category_id = get_field( 'category_id', $product_id);	
-	if (has_term($category_id , 'course-category', get_the_ID())){
-		$enroll_btn = '<div class="tutor-course-list-btn">' . apply_filters( 'tutor_course_restrict_new_entry', '<a href="' . get_the_permalink() . '" class="tutor-btn tutor-btn-outline-primary tutor-btn-md tutor-btn-block ' . $button_class . ' " data-course-id="' . $course_id . '">' . __( 'Enroll Course', 'tutor' ) . '</a>' ) . '</div>';
-	} else {
-		$enroll_btn = '<div class=""><a href="' . esc_url( $product->add_to_cart_url() ). '" class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block">В козину  ' . $price . '</a><a class="tutor-btn tutor-btn-primary tutor-btn-lg tutor-btn-block tutor-mt-24 tutor-enroll-course-button tutor-static-loader" href="' . home_url()  . '/тарифы">Подписка</a></div>';
-
-	}
-}
 
 
 
