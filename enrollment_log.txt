@@ -1,0 +1,6 @@
+Failed to enroll User ID 10 to Course ID 341.
+Attempting to enroll User ID 10 to Course ID 341.
+Failed to enroll User ID 10 to Course ID 341.
+Attempting to enroll User ID 10 to Course ID 341.
+Failed to enroll User ID 10 to Course ID 341.
+Error: 
